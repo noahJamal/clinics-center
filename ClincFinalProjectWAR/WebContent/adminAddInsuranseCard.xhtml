@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head></h:head>
+<h:body>
+<h:form>
+card code:<h:inputText value="#{adminCardInsurBean.addCard.cardCode}"></h:inputText><br/>
+Card name:<h:inputText value="#{adminCardInsurBean.addCard.cardName}"></h:inputText><br/>
+card Note:<h:inputText value="#{adminCardInsurBean.addCard.cardNote}"></h:inputText><br/>
+card per:<h:inputText value="#{adminCardInsurBean.addCard.cardPer}"></h:inputText><br/>
+card state<h:inputText value="#{adminCardInsurBean.addCard.cardState}"></h:inputText><br/>
+card date:<h:inputText value="#{adminCardInsurBean.addCard.cardDate}">
+<f:convertDateTime pattern="MM/dd/yyyy"></f:convertDateTime>
+</h:inputText><br/>
+
+insurance company id:<h:inputText value="#{adminCardInsurBean.addCard.insuranceCompany.compId}"></h:inputText><br/>
+
+<h:commandButton value="insert card" action="#{adminCardInsurBean.insertCardInsur}"></h:commandButton>
+</h:form>
+</h:body>
+</html>

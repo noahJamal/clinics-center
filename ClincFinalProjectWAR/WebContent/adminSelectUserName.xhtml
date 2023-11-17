@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head></h:head>
+<h:body>
+<h:form>
+<h:dataTable id="showData" value="#{userAdminBusBean.selectUserName}" var="item">
+<h:column >
+<f:facet name="header"> User Id </f:facet>
+#{item.userId}
+
+</h:column>
+<h:column >
+<f:facet name="header"> User Code </f:facet>
+#{item.userCode}
+</h:column>
+<h:column >
+<f:facet name="header"> User email </f:facet>
+#{item.userEmail}
+</h:column>
+<h:column >
+<f:facet name="header"> User Name </f:facet>
+#{item.userName}
+</h:column>
+<h:column >
+<f:facet name="header"> User password </f:facet>
+#{item.userPassword}
+</h:column>
+<h:column >
+<f:facet name="header"> User type </f:facet>
+#{item.userType}
+</h:column>
+<h:column >
+<f:facet name="header"> User Clinic </f:facet>
+#{item.clinicCenter.cliId}
+</h:column>
+<h:column >
+<f:facet name="header"> Update User </f:facet>
+<h:commandLink value="update" action="#{userAdminBusBean.getEditsUsers(item)}"></h:commandLink> 
+</h:column>
+
+<h:column >
+<f:facet name="header"> Delete User </f:facet>
+<h:commandLink value="Delete" action="#{userAdminBusBean.getRemove(item)}"></h:commandLink> 
+</h:column>
+</h:dataTable>
+</h:form>
+</h:body>
+
+</html>

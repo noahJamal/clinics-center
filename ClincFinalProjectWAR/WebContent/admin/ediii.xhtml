@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+
+<h:body>
+<h:form>
+
+ <p:outputLabel for="CompanyCode" value="Company Code"></p:outputLabel>
+	             	               <p:inputText id="CompanyCode" required="true" value="#{adminInsuranceComBean.updatesCompany.compCode}" ></p:inputText>
+	             	            
+	             	               <p:outputLabel for="CompanyName" value="Company Name:"></p:outputLabel>
+	             	               <p:inputText id="CompanyName" required="true" value="#{adminInsuranceComBean.updatesCompany.compName}"></p:inputText>
+	             	               
+	             	               <p:outputLabel for="CompanyPhone" value="Company Phone:"></p:outputLabel>
+	             	               <p:inputText id="CompanyPhone" required="true" value="#{adminInsuranceComBean.updatesCompany.compPhone}"></p:inputText>
+	
+		             	           <p:outputLabel for="CompanyAddress" value="Company Address:"></p:outputLabel>
+	             	               <p:inputText id="CompanyAddress" required="true" value="#{adminInsuranceComBean.updatesCompany.compAddress}"></p:inputText>
+	
+		             	           <p:outputLabel for="CompanyStatus" value="Company Status:"></p:outputLabel>
+	             	               <p:inputText id="CompanyStatus" required="true" value="#{adminInsuranceComBean.updatesCompany.compState}"></p:inputText>
+	             	               
+	             	               <p:outputLabel for="CompanyClinc" value="Clinic Name:"></p:outputLabel>
+	             	               <p:inputText id="CompanyClinc" required="true" value="#{adminInsuranceComBean.updatesCompany.clinicCenter.cliName}"></p:inputText>
+	                               
+	                               <p:commandButton value="submit" style=" width: 40%; height: 100%; margin:1px 10px 1px 1px;"
+	                                actionListener="#{adminInsuranceComBean.updateInsuranceComp()}"></p:commandButton>
+	
+	
+
+
+</h:form>
+
+
+</h:body>
+</html>

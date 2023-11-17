@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+	
+	<style   type="text/css">
+     .ui-filter-column .ui-column-customfilter .custom-filter {
+        width: 100%;
+        box-sizing: border-box;
+    }
+</style>
+	</h:head>
+
+<ui:composition template="./ClinicTemplateAdmin.xhtml">
+	<ui:define name="medicine_Contant">
+	           <h:form id="searchMedicineForm">
+	           <p:growl id="searchMedGrowl" showDetail="true" showSummary="true"></p:growl>
+	              <p:panelGrid id="searchMedicinePanel" columns="3" layout="grid" contentStyleClass="p-align-baseline ui-fluid" style="font-size: 15px;">
+	                   <p:outputLabel for="medIDsearch" value="Medicine ID :"></p:outputLabel>
+	                   <p:inputText id="medIDsearch" value="#{adminMedicineView.medicineId}" placeholder="Insert Medicine ID" required="true" requiredMessage="Please insert Medicine ID !"></p:inputText>
+	                   <p:commandButton id="searchMedIDbutton" actionListener="#{adminMedicineView.SelectMedicineId}" value="Search" process="@this medIDsearch" update="medicineTableForm , searchMedGrowl" style=" width: 50%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-search"></p:commandButton>
+	             
+	                   <p:outputLabel for="MedNameSearch" value="Medicine Name:"></p:outputLabel>
+	                   <p:autoComplete id="MedNameSearch" value="#{adminMedicineView.medName}" placeholder="Insert medicine name" required="true" requiredMessage="Please insert medicine Name !" completeMethod="#{adminMedicineView.completeTextName}" ></p:autoComplete>
+	                   <p:commandButton id="searchMedNameButton" actionListener="#{adminMedicineView.chosenMedicineName}" value="Search" process="@this MedNameSearch" update="medicineTableForm , searchMedGrowl" style=" width: 50%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-search"></p:commandButton>
+	             
+	                   <p:outputLabel for="medSsearch" value="Scientific Name:"></p:outputLabel>
+	                   <p:autoComplete id="medSsearch" value="#{adminMedicineView.medScienceName}"  placeholder="Insert Medicine Scientific Name" required="true" requiredMessage="Please Insert Scientific Name!" completeMethod="#{adminMedicineView.completeMedSName}"></p:autoComplete>
+	                   <p:commandButton id="medSSearchButton" value="Search" actionListener="#{adminMedicineView.chosenMedicineScienceName}" process="@this medSsearch" update="medicineTableForm , searchMedGrowl" style=" width: 50%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-search"></p:commandButton>
+	            
+                      <p:commandButton id="medFindAllButton" value="Find All" actionListener="#{adminMedicineView.chosenAllMedicine}" process="@this" update="medicineTableForm " style=" width: 50%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-search"></p:commandButton>
+                      
+                 </p:panelGrid>
+	           </h:form>
+	
+	           <h:form id="addNewMedForm">
+	                         <p:growl id="addNewMedGrowl" showDetail="true" showSummary="true"></p:growl>
+	                      <p:dialog id="addNewMedDilog" widgetVar="dlgAddNewMed" width="900" header="ADD MEDICINE" style="font-size: 15px;">
+	                              <p:panelGrid id="addNewMedPanel" columns="4" layout="grid" contentStyleClass="p-align-baseline ui-fluid" 
+	                                           columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4">
+	                                         
+	                                        <p:outputLabel for="addMedInputCode" value="Medicine Code :"></p:outputLabel>
+	                                        <p:inputText id="addMedInputCode" value="#{adminMedicineView.addMed.medCode}" required="true" requiredMessage="Please insert Medicine Code!" placeholder="insert Medicine Code"> </p:inputText> 
+	                              
+	                                         
+	                                        <p:outputLabel for="addMedInputName" value="Medicine Name :"></p:outputLabel>
+	                                        <p:inputText id="addMedInputName" value="#{adminMedicineView.addMed.medName}" required="true" requiredMessage="Please insert Medicine Name!" placeholder="insert Medicine Name"> </p:inputText> 
+	                              
+	                                         
+	                                        <p:outputLabel for="addMedInputSciene" value="Medicine Scientific  :"></p:outputLabel>
+	                                        <p:inputText id="addMedInputSciene" value="#{adminMedicineView.addMed.medSName}" required="true" requiredMessage="Please insert Medicine Scientific !" placeholder="insert Medicine Scientific"> </p:inputText> 
+	                              
+	                                         
+	                                        <p:outputLabel for="addMedInputPrice" value="Medicine Price :"></p:outputLabel>
+	                                        <p:inputNumber id="addMedInputPrice" value="#{adminMedicineView.addMed.medPrice}"  required="true" requiredMessage="Please insert Medicine  Price!" placeholder="insert Medicine Price"
+	                                                       decimalPlaces="2" symbol="$"  symbolPosition="s" decimalSeparator="," thousandSeparator="." maxValue="11000.999" minValue="0.5" emptyValue="always" > </p:inputNumber> 
+	                                        
+	                                        
+	                                         <p:outputLabel for="addMedInputClinic" value="Clinic Name :"></p:outputLabel>
+	                                       	 <p:selectOneMenu id="addMedInputClinic" value="#{adminMedicineView.addMed.clinicCenter.cliId}" style="width:100%;" required="true" requiredMessage="Insert Clinic name !" filter="true" 
+	                                                          filterMatchMode="startsWith" effect="fade" panelStyle="width:60px;" >
+	                                                 <f:selectItem itemLabel="Select One"></f:selectItem>
+	                                                 <f:selectItems  value="#{addClinicBeanView.mapSelectClinicNameID.entrySet()}" var="entry" itemLabel="#{entry.key}" itemValue="#{entry.value}" ></f:selectItems>
+	                                       
+	                                         </p:selectOneMenu>
+	                                       
+	                                         <f:facet name="footer" >
+	                                                      <p:commandButton id="addMedButtonSubmit" value="Submit" icon="ui-icon-check" actionListener="#{adminMedicineView.insertMedicine}" onclick="PF('dlgAddNewMed').hide();"
+	                                                                       style="width: 20%; height: 100%; margin:1px 10px 1px 1px; " update=":medicineTableForm:medicineDataTabe , addNewMedGrowl" process="@form addNewMedPanel"></p:commandButton>   
+	                                            
+	                                         </f:facet>
+	                                       
+	                              
+	                              </p:panelGrid>
+	                      
+	                      </p:dialog>
+	           
+	           
+	           </h:form>
+	
+	
+	           <h:form id="medicineTableForm">
+	                             <p:commandButton id="addNewMedicineButton" value="Add Medicine" oncomplete="PF('dlgAddNewMed').show();" icon="ui-icon-plusthick"></p:commandButton>
+	                         <p:growl id="medicineDataGrowl" showSummary="true" showDetail="true"></p:growl>
+	                            
+	               <p:dataTable  id="medicineDataTabe" var="item" value="#{adminMedicineView.selectAllMed}" editable="true" editMode="cell" widgetVar="RMC" style="font-size: 12px;"
+	                              paginator="true"  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	                              currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records" rows="13" filteredValue="#{adminMedicineView.selectAllddd}" 
+	                             emptyMessage="the value doesn't exit" >
+	                                
+	        
+	                                 <f:facet name="header"><h:outputText value="MEDICINE INFORMATION"></h:outputText></f:facet>
+	                     
+	                                  <p:ajax event="cellEdit" listener="#{adminMedicineView.updateMedicine}" update=":medicineTableForm:medicineDataGrowl"></p:ajax>
+	                                  
+	                     <p:column headerText="Medicine ID" sortBy="#{item.medId}" filterBy="{item.medId}">
+	                         <p:cellEditor>
+	                               <f:facet name="output">
+	                                      <h:outputText value="#{item.medId}"></h:outputText>
+	                               </f:facet>
+	                               <f:facet name="input">
+	                                      <p:inputText id="medInputID" value="#{item.medId}" style="width:100%;" required="true" requiredMessage="Insert Medicine ID!"  readonly="true"></p:inputText>
+	                               </f:facet>
+	                         </p:cellEditor>
+	                     </p:column>
+	               
+	               
+	               
+	               
+	                     <p:column headerText="Medicine Code" sortBy="#{item.medCode}" filterBy="#{item.medCode}">
+	                         <p:cellEditor>
+	                               <f:facet name="output">
+	                                      <h:outputText value="#{item.medCode}"></h:outputText>
+	                               </f:facet>
+	                               <f:facet name="input">
+	                                      <p:inputText id="medInputCode" value="#{item.medCode}" style="width:100%;" required="true" requiredMessage="Insert Medicine  Code!"></p:inputText>
+	                               </f:facet>
+	                         </p:cellEditor>
+	                     </p:column>
+	               
+	               
+	               
+	                     <p:column headerText="Medicine Name" sortBy="#{item.medName}" filterBy="#{item.medName}">
+	                         <p:cellEditor>
+	                               <f:facet name="output">
+	                                      <h:outputText value="#{item.medName}"></h:outputText>
+	                               </f:facet>
+	                               <f:facet name="input">
+	                                      <p:inputText id="medInputName" value="#{item.medName}" style="width:100%;" required="true" requiredMessage="Insert Medicine Name !"></p:inputText>
+	                               </f:facet>
+	                         </p:cellEditor>
+	                     </p:column>
+	               
+	               
+	               
+	                     <p:column headerText="Medicine Scientific" sortBy="#{item.medSName}" filterBy="#{item.medSName}">
+	                         <p:cellEditor>
+	                               <f:facet name="output">
+	                                      <h:outputText value="#{item.medSName}" ></h:outputText>
+	                               </f:facet>
+	                               <f:facet name="input">
+	                                      <p:inputText id="medInputSname" value="#{item.medSName}" style="width:100%;" required="true" requiredMessage="Insert Medicine Scientific Name !"></p:inputText>
+	                               </f:facet>
+	                         </p:cellEditor>
+	                     </p:column>
+	               
+	               
+	               
+	                     <p:column headerText="Medicine Price" sortBy="#{item.medPrice}" filterBy="#{item.medPrice}">
+	                         <p:cellEditor>
+	                               <f:facet name="output">
+	                                      <h:outputText value="#{item.medPrice}"></h:outputText>
+	                               </f:facet>
+	                               <f:facet name="input">
+	                               
+                                     
+	                                      <p:inputNumber id="medInputPrice" value="#{item.medPrice}" style="width:100%;" symbol="$"  required="true" requiredMessage="Insert Medicine Price !"
+	                                                     maxValue="1000000" minValue="0.5" padControl="true" symbolPosition="s" thousandSeparator="." decimalSeparator="," decimalPlaces="2"  ></p:inputNumber>
+	                               </f:facet>
+	                         </p:cellEditor>
+	                     </p:column>
+	               
+	               
+	               	               
+	                     <p:column headerText="ClinicName"   sortBy="#{item.clinicCenter.cliName}" filterBy="#{item.clinicCenter.cliName}"  >
+	                             
+	                         <p:cellEditor>
+	                            
+	                               <f:facet name="output">
+	                                      <h:outputText value="#{item.clinicCenter.cliName}" ></h:outputText>
+	                               </f:facet>
+	                               <f:facet name="input">
+	                                      <p:selectOneMenu id="medInputClinicName" value="#{item.clinicCenter.cliId}" style="width:100%;" 
+	                                                       required="true" requiredMessage="Insert Clinic name !" filter="true" 
+	                                                       filterMatchMode="startsWith" effect="fade" panelStyle="width:60px;" >
+	                                                 <f:selectItems  value="#{addClinicBeanView.mapSelectClinicNameID.entrySet()}" var="entry"
+	                                                                   itemLabel="#{entry.key}" itemValue="#{entry.value}" ></f:selectItems>
+	                                      </p:selectOneMenu>
+	                               </f:facet>
+	                         </p:cellEditor>
+	                     </p:column>
+	                     
+	                     
+	               
+	                    <p:column headerText="Delete">
+	                               <p:commandLink id="deleteMedicine" action="#{adminMedicineView.deleteMedicine}" update=":medicineTableForm , :medicineTableForm:medicineDataGrowl">
+	                                   <h:outputText value="delete" class="ui-icon ui-icon-trash" ></h:outputText> 
+	                                   <f:setPropertyActionListener value="#{item}" target="#{adminMedicineView.deletesMes}"></f:setPropertyActionListener>
+	                                   <p:confirm header="confirmation" icon="pi pi-exclamation-triangle"  message="Are yoy sure ?"></p:confirm>
+	                                </p:commandLink>
+	                                <p:confirmDialog showEffect="fade" hideEffect="fade" global="true">
+	                                   <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                       <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+	                                </p:confirmDialog>
+	                    </p:column>
+	                          
+	                          
+	               
+	               
+	               </p:dataTable>
+	
+	                    <p:contextMenu for="medicineDataTabe" widgetVar="Cmenu" style="width:120px;">
+	                    
+	                       <p:menuitem value="Edit Cell " icon="ui-icon-search" onclick="PF('RMC').showCellEditor();return false" ></p:menuitem>
+	                       <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('Cmenu').hide();"></p:menuitem>
+	                    </p:contextMenu>
+	
+	
+	           </h:form>
+	    
+	</ui:define>
+
+</ui:composition>
+</html>

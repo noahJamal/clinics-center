@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="ClinicTemplateAdmin.xhtml">
+	
+	<ui:define name="content">
+	<h:body> <h:form>
+	
+	
+card code:<p:inputText value="#{adminCardInsurBean.addCard.cardCode}"></p:inputText><br/>
+Card name:<p:inputText value="#{adminCardInsurBean.addCard.cardName}"></p:inputText><br/>
+card Note:<p:inputText value="#{adminCardInsurBean.addCard.cardNote}"></p:inputText><br/>
+card per:<p:inputText value="#{adminCardInsurBean.addCard.cardPer}"></p:inputText><br/>
+card state<p:inputText value="#{adminCardInsurBean.addCard.cardState}"></p:inputText><br/>
+	</h:form> </h:body>
+	</ui:define>
+	
+</ui:composition>
+</html>

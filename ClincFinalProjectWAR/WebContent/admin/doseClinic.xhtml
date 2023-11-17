@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+      <ui:composition template="./ClinicTemplateAdmin.xhtml">
+	       <ui:define name="dose_Contant">
+	          
+	          <p:growl id="msge" showDetail="true" ></p:growl>
+	          
+	          <h:form id="searchDoseForm">
+	          
+	              <p:panelGrid id="searchDosePanel" columns="3" layout="grid" style="font-size: 15px;" contentStyleClass="p-align-baseline ui-fluid" >
+	                   <p:outputLabel for="doseIDSearch" value="Dose ID:"></p:outputLabel> 
+	                   <p:inputText id="doseIDSearch" value="#{adminDoseBean.doseID}" placeholder="insert Dose ID"  required="true" requiredMessage="Please Insert Dose ID"></p:inputText>
+	                   <p:commandButton id="searcDoseIdButton" actionListener="#{adminDoseBean.chosenDoseId}"  value="Search" process="@this doseIDSearch" update=":dataDoseTable:doseTable" style=" width: 50%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-search"></p:commandButton>
+	                      
+	              
+	                   <p:outputLabel for="doseNameSearch" value="Dose Name :"></p:outputLabel>
+	                   <p:autoComplete id="doseNameSearch" value="#{adminDoseBean.dosesName}" completeMethod="#{adminDoseBean.completeTextName}" placeholder="Insert Dose Name"   required="true" requiredMessage="Please Insert Dose Name"></p:autoComplete>
+	                   <p:commandButton id="searcDoseNameButton" actionListener="#{adminDoseBean.chosenDoseName}"  value="Search" process="@this doseNameSearch" update=":dataDoseTable:doseTable" style=" width: 50%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-search"></p:commandButton>
+	                   
+	                   
+	                  <p:commandButton id="searchAllDoseButton" actionListener="#{adminDoseBean.chosenAllDose}"  value="Find All" process="@this" update=":dataDoseTable:doseTable" style=" width: 50%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-search"></p:commandButton>
+	                   
+	              </p:panelGrid>
+	          
+	          </h:form>
+	          
+	          <h:form id="dataDoseTable"> 
+	                
+	                <p:commandButton id="addNewDose" value="Add Dose" icon="ui-icon-plusthick" oncomplete="PF('addDoseDlg').show();"></p:commandButton>
+	                
+	               <p:dataTable id="doseTable" value="#{adminDoseBean.selectAllDoses}" var="item" rowKey="#{item.doseId}"  selectionMode="single" selection="#{adminDoseBean.updatesDose}"
+	                          paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	                          currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"  rows="10" style="font-size: 12px;">
+	             
+	                         <p:ajax event="rowSelect" update=""></p:ajax>
+	                         <f:facet name="header">Doses </f:facet>
+	                         
+	                         <p:column headerText="Dose ID">
+	                            <h:outputText value="#{item.doseId}"></h:outputText>
+	                         </p:column>
+	             	                         
+	                         <p:column headerText="Dose Code">
+	                            <h:outputText value="#{item.doesCode}"></h:outputText>
+	                         </p:column>
+	             	                         
+	                         <p:column headerText="Dose Name">
+	                            <h:outputText value="#{item.doesName}"></h:outputText>
+	                         </p:column>
+	             	                         
+	                         <p:column headerText="Dose Quantity">
+	                            <h:outputText value="#{item.doesCoun}"></h:outputText>
+	                         </p:column>
+	             	                         
+	                         <p:column headerText="Dose Size">
+	                            <h:outputText value="#{item.doesSize}"></h:outputText>
+	                         </p:column>
+	                         	             	                         
+	                         <p:column headerText="Dose Time">
+	                            <h:outputText value="#{item.doesTime}"></h:outputText>
+	                         </p:column>
+	                         	             	                         
+	                         <p:column headerText="Dose Note">
+	                            <h:outputText value="#{item.doesNote}"></h:outputText>
+	                         </p:column>
+	             
+	             	          <p:column headerText="Clinic Name">
+	                            <h:outputText value="#{item.clinicCenter.cliName}"></h:outputText>
+	                         </p:column>
+	                         
+	                         <p:column>
+	                            <p:commandLink id="deleteDoseButton"  action="#{adminDoseBean.deleteDose}" update=":dataDoseTable:doseTable , msge" >
+	                                 <h:outputText value="delete" class="ui-icon ui-icon-trash" ></h:outputText> 
+	                                 <f:setPropertyActionListener value="#{item}" target="#{adminDoseBean.deletesDose}"></f:setPropertyActionListener>
+	                                 <p:confirm header="confirmation" icon="pi pi-exclamation-triangle"  message="Are yoy sure ?" ></p:confirm>
+	                            </p:commandLink>
+	                             <p:confirmDialog showEffect="fade" hideEffect="fade" global="true">
+	                                  <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                      <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+	                             </p:confirmDialog>
+	                         </p:column>
+	             
+	                         <f:facet name="footer">
+	                            <p:commandButton id="updateDoseButton" value="Update" icon="ui-icon-pencil" update="editForm"
+	                            style=" width: 10%; height: 100%; margin:1px 10px 1px 1px;" oncomplete="PF('editDlg').show();"></p:commandButton>
+	                         </f:facet>
+	                          
+	                </p:dataTable>
+	          
+	          </h:form>
+	
+	           
+	          <h:form id="editForm">
+	           
+	             <p:dialog header="EditDose" widgetVar="editDlg" width="900">
+	                <p:panelGrid id="editPanel" columns="4" layout="grid" style="font-size: 15px;" columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4" >
+	                    <f:facet name="header">
+	                           <h:outputFormat value="Dose ID : {0}"> <f:param value="#{adminDoseBean.updatesDose.doseId}" ></f:param></h:outputFormat>
+	                     </f:facet>
+	                     
+	                     <p:outputLabel for="doseCodeDi" value="Dose Code:"></p:outputLabel>
+	                     <p:inputText id="doseCodeDi" value="#{adminDoseBean.updatesDose.doesCode}" required="true" requiredMessage="Please Insert Dose Code" ></p:inputText>
+	                     	                    
+	                     <p:outputLabel for="doseNameDi" value="Dose Name:"></p:outputLabel>
+	                     <p:inputText id="doseNameDi" value="#{adminDoseBean.updatesDose.doesName}" required="true" requiredMessage="Please Insert Dose Name" ></p:inputText>
+	                    
+	                     <p:outputLabel for="doseCounDi" value="Dose Quantity:"></p:outputLabel>
+	                     <p:inputText id="doseCounDi" value="#{adminDoseBean.updatesDose.doesCoun}" required="true" requiredMessage="Please Insert Dose Quantity" ></p:inputText>
+	                
+	                     <p:outputLabel for="doseTimeDi" value="Dose Time"></p:outputLabel>
+	                     <p:inputText id="doseTimeDi" value="#{adminDoseBean.updatesDose.doesTime}" required="true" requiredMessage="Please Insert Dose Time" ></p:inputText>
+	                
+	                     <p:outputLabel for="doseNoteDi" value="Dose Note"></p:outputLabel>
+	                     <p:inputText id="doseNoteDi" value="#{adminDoseBean.updatesDose.doesNote}" required="true" requiredMessage="Please Insert Dose Note" ></p:inputText>
+	                
+	                     <f:facet name="footer">
+	                     <p:commandButton id="submitUpdateButton" value="Submit" actionListener="#{adminDoseBean.updateDose}" oncomplete="PF('editDlg').hide();" update=":dataDoseTable:doseTable , msge"
+	                      style=" width: 10%; height: 100%; margin:1px 10px 1px 1px;" icon=" ui-icon-disk"></p:commandButton>
+	                      <p:commandButton value="Cancel"  icon="pi pi-times" oncomplete="PF('editDlg').hide();" />
+	                     </f:facet>
+	                </p:panelGrid>
+	             
+	             
+	             </p:dialog>
+	           
+	          </h:form>
+	          
+	          <h:form id="addDoseForm">
+	          
+	              <p:dialog id="addDoseDialog" header="Add Dose" widgetVar="addDoseDlg" width="800">
+	              
+	                    <p:panelGrid id="addDose" columns="4" layout="grid" style="font-size: 15px;" columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4" 
+	                    contentStyleClass="p-align-baseline ui-fluid"  >
+	                       
+	                       <p:outputLabel for="addDoseCode" value="Dose Code:" ></p:outputLabel>
+	                       <p:inputText id="addDoseCode" value="#{adminDoseBean.addDose.doesCode}" required="true" placeholder="Insert Dose Code" requiredMessage="Please Insert Dose Code !" ></p:inputText>
+	                       
+	                       <p:outputLabel for="addDoseName" value="Dose Name:" ></p:outputLabel>
+	                       <p:inputText id="addDoseName" value="#{adminDoseBean.addDose.doesName}" required="true" placeholder="Insert Dose Name" requiredMessage="Please Insert Dose Name !" ></p:inputText>
+	                     
+	                       
+	                       <p:outputLabel for="addDoseCoun" value="Dose Quantity:" ></p:outputLabel>
+	                       <p:inputText id="addDoseCoun" value="#{adminDoseBean.addDose.doesCoun}" required="true" placeholder="Insert Dose Quantity" requiredMessage="Please Insert Dose Quantity !" ></p:inputText>
+	                     
+	                       
+	                       <p:outputLabel for="addDoseSize" value="Dose Size:" ></p:outputLabel>
+	                       <p:inputText id="addDoseSize" value="#{adminDoseBean.addDose.doesSize}" required="true" placeholder="Insert Dose Size" requiredMessage="Please Insert Dose Size !" ></p:inputText>
+	                     
+	                       
+	                       <p:outputLabel for="addDoseTime" value="Dose Time:" ></p:outputLabel>
+	                       <p:inputText id="addDoseTime" value="#{adminDoseBean.addDose.doesTime}" required="true" placeholder="Insert Dose Time" requiredMessage="Please Insert Dose Time !" ></p:inputText>
+	                     
+	                       
+	                       <p:outputLabel for="addDoseNote" value="Dose Note:" ></p:outputLabel>
+	                       <p:inputText id="addDoseNote" value="#{adminDoseBean.addDose.doesNote}" required="true" placeholder="Insert Dose Note" requiredMessage="Please Insert Dose Note !" ></p:inputText>
+	                     
+	                       
+	                       <p:outputLabel for="addDoseClinic" value="Clinc Name:" ></p:outputLabel>
+                           <p:selectOneMenu id="addDoseClinic" value="#{adminDoseBean.addDose.clinicCenter.cliId}"  panelStyle="width:180px" 
+                                             effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+                                  <f:selectItem itemLabel="Select One" itemValue="" ></f:selectItem>
+                                  <f:selectItems value="#{adminDoseBean.mapSelectClinicNameID.entrySet()}" var="entry"   itemValue="#{entry.value}" itemLabel="#{entry.key}" ></f:selectItems>
+                                
+                            </p:selectOneMenu>
+        
+        
+	                       <f:facet name="footer">
+	                       <p:commandButton id="addDoseButton" value="Submit" actionListener="#{adminDoseBean.insertDose}" style=" width: 20%; height: 100%; margin:1px 10px 1px 1px; " icon=" ui-icon-check"
+	                       update=":dataDoseTable:doseTable , msge" oncomplete="PF('addDoseDlg').hide();"></p:commandButton>
+	                     </f:facet>
+	                    </p:panelGrid>
+	                    
+	              </p:dialog>
+	          
+	          </h:form>
+	 
+	          
+	          
+	          
+	        </ui:define>
+</ui:composition>
+</h:body>
+</html>

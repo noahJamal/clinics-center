@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head></h:head>
+<h:body>
+<h:form>
+<h:inputText value="#{addClinicBean.clinicName}" ></h:inputText>
+<h:commandButton id="buttonOne" value="insert name" action="#{addClinicBean.SelectclinicByName}">
+<f:ajax event="change" execute="buttonOne" render="showData"></f:ajax>
+</h:commandButton>
+</h:form>
+
+<h:form id="deleteClinic">
+<h:dataTable id="showData" value="#{addClinicBean.clinicIdInfo}" var="item">
+<h:column >
+<f:facet name="header"> Clinic Id </f:facet>
+<h:outputText value="#{item.cliId}"></h:outputText>
+</h:column>
+<h:column >
+<f:facet name="header"> Clinic Code </f:facet>
+<h:outputText value="#{item.cliCode}"></h:outputText>
+
+</h:column>
+<h:column >
+<f:facet name="header"> Clinic Location </f:facet>
+<h:outputText value="#{item.cliLoc}"></h:outputText>
+
+</h:column>
+<h:column >
+<f:facet name="header"> Clinic Name </f:facet>
+<h:outputText value="#{item.cliName}"></h:outputText>
+
+</h:column>
+<h:column >
+<f:facet name="header"> Clinic Note </f:facet>
+<h:outputText value="#{item.cliNote}"></h:outputText>
+
+</h:column>
+<h:column >
+
+<f:facet name="header"> Delete Clinic </f:facet>
+<h:commandLink value="delete" action="#{addClinicBean.DeleteClinic(item)}"></h:commandLink>
+</h:column>
+<h:column>
+<f:facet name="header"> update Clinc</f:facet>
+<h:commandLink value="update" action="#{addClinicBean.updateInfo(item)}"></h:commandLink>
+</h:column>
+</h:dataTable>
+</h:form>
+</h:body>
+
+</html>

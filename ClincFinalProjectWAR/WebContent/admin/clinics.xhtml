@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <style type="text/css">   
+  .ui-datatable {
+      margin-bottom:20px;
+  }
+  </style>
+</h:head>
+<h:body>
+   <ui:composition template="./ClinicTemplateAdmin.xhtml">
+	
+	   <ui:define name="clinic_Contant">
+	   <p:growl id="msgs" showDetail="true"></p:growl>
+	  
+	    <h:form id="insertClinic">
+	     <p:commandButton id="addNewClinic" value="Add Clinic"  icon="ui-icon-plusthick" oncomplete="PF('addCli').show()" 
+	             	       style=" width: 10%; height: 100%; margin:1px 10px 1px 1px; "></p:commandButton>
+	           <p:dialog header="Add clinic " widgetVar="addCli" width="1000" >
+	              <p:panelGrid id="panelInsert" columns="4" layout="grid" style="font-size: 15px;" columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4" contentStyleClass="p-align-baseline ui-fluid">
+	                    <p:outputLabel for="clinicCode" value="Clinic Code:" ></p:outputLabel>
+	                    <p:inputText id="clinicCode" value="#{addClinicBeanView.clinicCenter.cliCode}" required="true" placeholder="insert Code" > </p:inputText>
+	              
+	                    <p:outputLabel for="clinicName" value="Clinic Name:" ></p:outputLabel>
+	                    
+	                    <p:selectOneMenu id="clinicName" value="#{addClinicBeanView.clinicCenter.cliName}" >
+	                                      <f:selectItems value="#{systemLookupView.selectClinicName.entrySet()}" var="entry" itemValue="#{entry.value}" itemLabel="#{entry.key}"></f:selectItems>
+	                     </p:selectOneMenu>
+	                    
+	                    
+	                    <p:outputLabel for="clinicLocation" value="Clinic Location:" ></p:outputLabel>
+	                    <p:inputText id="clinicLocation" value="#{addClinicBeanView.clinicCenter.cliLoc}" required="true" placeholder="insert location" > </p:inputText>
+	                    
+	                    <p:outputLabel for="clinicPhone" value="Clinic Phone No:" ></p:outputLabel>
+	                    <p:inputMask id="clinicPhone" value="#{addClinicBeanView.clinicCenter.cliPhoneNo}" required="true" placeholder="insert phone number" mask="(999) 999-9999"> </p:inputMask>
+	              
+	                    <p:outputLabel for="clinicNote" value="Clinic Note:" ></p:outputLabel>
+	                    <p:inputText id="clinicNote" value="#{addClinicBeanView.clinicCenter.cliNote}" required="true" placeholder="insert note" > </p:inputText>
+	                    
+	                   
+	                    <p:commandButton id="clinicAddButton" value="Submit" actionListener="#{addClinicBeanView.addClinic}"  onclick="Pf('addCli').hide();" 
+	                    style=" width: 50%; height: 100%; margin:1px 10px 1px 1px;" update=":dataClinicTable, msgs" process="@form" icon=" ui-icon-check"></p:commandButton>
+	              </p:panelGrid>
+	           </p:dialog>
+	    
+	    </h:form>
+	    
+	    
+	    <h:form id="searchForm">
+	      <p:panel>
+	        <p:panelGrid columns="3"  layout="grid" style="font-size: 15px; " contentStyleClass="p-align-baseline ui-fluid">
+	          
+	                    <p:outputLabel for="clinicId" value="Clinic ID:"></p:outputLabel>
+	                    <p:inputText  id="clinicId" required="true" placeholder="Insert clinic ID"  value="#{addClinicBeanView.clinicId}"  ></p:inputText>
+	                    <p:commandButton id="submit1"  value="Search" update="dataClinicTable"  actionListener="#{addClinicBeanView.selectClincById}" process="@this clinicId" partialSubmit="true"  style=" width: 200%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-search"></p:commandButton>
+	       	 </p:panelGrid>
+	       	      
+	       	 <p:panelGrid columns="3"  layout="grid" style="font-size: 15px; " contentStyleClass="p-align-baseline ui-fluid">
+	       
+	                    <p:outputLabel for="clinicName" value="clinic Name:"></p:outputLabel>
+	                    <p:autoComplete id="clinicName"  required="true" placeholder="Insert clinic name" value="#{addClinicBeanView.clinicName}" completeMethod="#{addClinicBeanView.completeText}" > </p:autoComplete>
+	                    <p:commandButton id="submit2"  value="Search" actionListener="#{addClinicBeanView.selectClinicName}"  update="dataClinicTable" process="@this clinicName" style=" width: 200%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-search"></p:commandButton>
+	        
+	        </p:panelGrid>
+	    
+	        <p:panelGrid columns="3"  layout="grid" style="font-size: 15px; " contentStyleClass="p-align-baseline ui-fluid">
+	        <p:commandButton value="Find All" actionListener="#{addClinicBeanView.showAllClinic}" update="dataClinicTable" process="@this" style=" width: 200%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-refresh"></p:commandButton>
+	        </p:panelGrid>
+	      </p:panel>
+	    </h:form>
+	    
+	    
+	    <h:form id="dataClinicTable">
+	       
+	       
+	            
+	       <p:dataTable id="ClinicTable" value="#{addClinicBeanView.selectAllClinic}"  var="item" rowKey="#{item.cliId}" selectionMode="single" selection="#{addClinicBeanView.updateUser}"
+	       paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	       currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records" rows="10"  style="font-size: 12px;" 
+	       
+            >
+	             <f:facet name="header">Clinics </f:facet>
+	             
+	             
+	             <p:ajax event="rowSelect"   update="@form ,kkk"/><!-- oncomplete="PF('dlg1').show();" -->
+	             
+	             
+	             <p:column headerText="Clinic Id"> 
+	                <h:outputText value="#{item.cliId}"></h:outputText>
+	             </p:column>
+	             
+	             <p:column headerText="Clinic Code"> 
+	                <h:outputText value="#{item.cliCode}"></h:outputText>
+	             </p:column>
+	             
+	             
+	            <p:column headerText="Clinic Name"> 
+	                <h:outputText value="#{item.cliName}"></h:outputText>
+	             </p:column>
+	             
+	             <p:column headerText="Clinic Location"> 
+	                <h:outputText value="#{item.cliLoc}"></h:outputText>
+	             </p:column>
+	             
+	             <p:column headerText="Clinic Phone No"> 
+	                <h:outputText value="#{item.cliPhoneNo}"></h:outputText>
+	             </p:column>
+	             
+	             
+	             <p:column headerText="Clinic Note"> 
+	                <h:outputText value="#{item.cliNote}"></h:outputText>
+	             </p:column>
+	             
+	             <p:column>
+	                <p:commandLink id="delClinic"  action="#{addClinicBeanView.deleteClinics}"  update=":dataClinicTable:ClinicTable , msgs"  >   
+	                 <h:outputText value="Delete"  class="ui-icon ui-icon-trash"/>
+	                 <f:setPropertyActionListener   value="#{item}" target="#{addClinicBeanView.deleteClinic}" ></f:setPropertyActionListener>
+	                 <p:confirm header="Confirmation"  message="Are ypu sure?" icon="pi pi-exclamation-triangle"></p:confirm>
+	                </p:commandLink>
+	             </p:column>
+	             
+	             <f:facet name="footer">
+		             <p:commandButton value="Update" style=" width: 10%; height: 100%; margin:1px 10px 1px 1px;"
+	                                 oncomplete="PF('dlg1').show();"   update="@form ,kkk" icon="ui-icon-pencil"></p:commandButton>
+	                                 
+	                 
+		        </f:facet>
+	       </p:dataTable>
+	</h:form>
+	    
+	<h:form id="kkk">
+	             	  <p:dialog  header="Edit Clinic"   widgetVar="dlg1" width="800"  >
+	             	            
+	             	      <p:panelGrid id="myy" columns="4"  layout="grid" style="font-size: 15px;">
+	             	            
+	             	               <f:facet name="header">
+	             	               <h:outputFormat value="{0}"> Clinic ID:  <f:param value="#{addClinicBeanView.updateUser.cliId}" ></f:param> 
+	             	               </h:outputFormat></f:facet> 
+	                               <p:outputLabel  for="ClinicCode" value="Clinic Code"></p:outputLabel>
+	             	               <p:inputText id="ClinicCode" required="true" value="#{addClinicBeanView.updateUser.cliCode}" ></p:inputText>
+	             	            
+	             	               <p:outputLabel for="ClinicName" value="Clinic Name:"></p:outputLabel>
+	             	               <p:inputText id="ClinicName" required="true" value="#{addClinicBeanView.updateUser.cliName}"></p:inputText>
+	             	               
+	             	               <p:outputLabel for="ClinicPhone" value="Clinic Phone:"></p:outputLabel>
+	             	               <p:inputMask id="ClinicPhone" required="true" value="#{addClinicBeanView.updateUser.cliPhoneNo}" mask="(999) 999-9999"></p:inputMask>
+	
+		             	           <p:outputLabel for="ClinicAddress" value="Clinic Address:"></p:outputLabel>
+	             	               <p:inputText id="ClinicAddress" required="true" value="#{addClinicBeanView.updateUser.cliLoc}"></p:inputText>
+	
+	                               <p:outputLabel  for="ClinicNote" value="Clinic Note"></p:outputLabel>
+	             	               <p:inputText id="ClinicNote" required="true" value="#{addClinicBeanView.updateUser.cliNote}" ></p:inputText>
+	             	            
+	             	            
+	             	              
+		             	         
+		             	           <p:commandButton value="edit" style=" width: 200%; height: 100%; margin:1px 10px 1px 1px;" icon=" ui-icon-disk"
+	                               oncomplete="PF('dlg1').hide()"  actionListener="#{addClinicBeanView.editeClinic}"  update=":dataClinicTable:ClinicTable ,msgs" ></p:commandButton>
+	
+		             	          
+	                               
+	                               
+	
+	             	      </p:panelGrid>
+	             	  </p:dialog>
+	
+	    
+	    </h:form>
+	    
+	    
+	    <h:form>
+	    
+	                        <p:confirmDialog showEffect="fade" hideEffect="fade" global="true" >
+	         
+	                           <p:commandButton value="yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" update=":dataClinicTable:ClinicTable"></p:commandButton>
+	                           <p:commandButton value="no" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times"></p:commandButton>
+	         
+	                        </p:confirmDialog>
+	    
+	    </h:form>
+	 </ui:define>
+	
+  </ui:composition>
+ </h:body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head></h:head>
+<h:body> <h:form>
+<h:inputText value="#{adminOperationDoctorBean.updatesDoctors.docCode}"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.updatesDoctors.dcoName}"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.updatesDoctors.docBd}">
+<f:convertDateTime pattern="MM/dd/yyyy"></f:convertDateTime>
+</h:inputText>
+
+<h:inputText value="#{adminOperationDoctorBean.updatesDoctors.docAddress}"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.updatesDoctors.docMajor}"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.updatesDoctors.docExp}"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.updatesDoctors.docPhone}"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.updatesDoctors.clinicCenter.cliId}"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.updatesDoctors.user.userId}"></h:inputText>
+<h:commandButton value="update" action="#{adminOperationDoctorBean.updateDocotr}"></h:commandButton>
+</h:form> </h:body>
+</html>

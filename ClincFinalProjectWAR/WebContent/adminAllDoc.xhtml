@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:body>
+<h:form>
+<h:dataTable id="showData" value="#{adminOperationDoctorBean.allDocInfo}" var="item">
+<h:column >
+<f:facet name="header"> Doc Id </f:facet>
+<h:outputText value="#{item.docId}"></h:outputText>
+</h:column>
+<h:column >
+<f:facet name="header"> doc Code </f:facet>
+<h:outputText value="#{item.docCode}"></h:outputText>
+</h:column>
+<h:column >
+<f:facet name="header"> doc name </f:facet>
+<h:outputText value="#{item.dcoName}"></h:outputText>
+</h:column>
+<h:column >
+<f:facet name="header"> doc exp </f:facet>
+<h:outputText value="#{item.docExp}"></h:outputText>
+</h:column>
+<h:column >
+<f:facet name="header"> doc major</f:facet>
+<h:outputText value="#{item.docMajor}"></h:outputText>
+</h:column>
+<h:column >
+<f:facet name="header"> doc Address</f:facet>
+<h:outputText value="#{item.docAddress}"></h:outputText>
+</h:column>
+<h:column >
+<f:facet name="header"> doc birthDay</f:facet>
+<h:outputText value="#{item.docBd}"></h:outputText>
+</h:column>
+<h:column >
+<f:facet name="header"> doc phone</f:facet>
+<h:outputText value="#{item.docPhone}"></h:outputText>
+</h:column>
+<h:column >
+<f:facet name="header"> user id</f:facet>
+<h:outputText value="#{item.user.userId}"></h:outputText>
+</h:column>
+<h:column >
+<f:facet name="header"> Clinic id</f:facet>
+<h:outputText value="#{item.clinicCenter.cliId}"></h:outputText>
+</h:column>
+
+<h:column >
+<f:facet name="header"> update user</f:facet>
+<h:commandLink value="updates" action="#{adminOperationDoctorBean.getEditDoc(item)}"></h:commandLink>
+</h:column>
+<h:column >
+<f:facet name="header"> delete user</f:facet>
+<h:commandLink value="delete" action="#{adminOperationDoctorBean.removeDoctor(item)}"></h:commandLink>
+</h:column>
+</h:dataTable>
+</h:form>
+</h:body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+	
+	xmlns:p="http://primefaces.org/ui"
+	 xmlns:h="http://java.sun.com/jsf/html"
+    	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsf/core">
+<h:head>
+
+<style type="text/css">   
+  .ui-datatable {
+      margin-bottom:20px;
+  }
+  </style>
+</h:head>
+<h:body>
+<ui:composition template="./ClinicTemplateAdmin.xhtml">
+	
+  <ui:define name="Company_insurance">
+          
+	       <p:growl id="msg" showDetail="true" globalOnly="true" ></p:growl>
+
+	   <h:form id="insertCompForm">
+	   
+	    <p:commandButton id="addNewComp" value="Add New Company" oncomplete="PF('addData').show();" style=" width: 30%; height: 100%; margin:1px 10px 1px 1px;"></p:commandButton>
+	     <p:dialog  header="Add company:"   widgetVar="addData" width="800"  >
+	       <p:panelGrid  columns="4" layout="grid" style="font-size: 15px;" columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4" contentStyleClass="p-align-baseline ui-fluid">
+	           <p:outputLabel for="compCode" value="Company Code:"></p:outputLabel>
+	           <p:inputText id="compCode" required="true" placeholder="Insert Company Code" value="#{adminInsuranceComBeanView.addCompany.compCode}" > </p:inputText>
+	           
+	                     
+	           <p:outputLabel for="CompName" value="Company Name:"></p:outputLabel>
+	           <p:inputText id="CompName" required="true" placeholder="Insert Company Name" value="#{adminInsuranceComBeanView.addCompany.compName}" > </p:inputText>
+	           	           
+	           <p:outputLabel for="compPhone" value="Company Phone:"></p:outputLabel>
+	           <p:inputText id="compPhone" required="true" placeholder="Insert" value="#{adminInsuranceComBeanView.addCompany.compPhone}"> </p:inputText>
+	           	           
+	           <p:outputLabel for="compAddress" value="Company Address:"></p:outputLabel>
+	           <p:inputText id="compAddress" required="true" placeholder="Insert Company Address" value="#{adminInsuranceComBeanView.addCompany.compAddress}"> </p:inputText>
+	           	           
+	           <p:outputLabel for="compState" value="Company Status:"></p:outputLabel>
+	           <p:inputText id="compState" required="true" placeholder="Insert" value="#{adminInsuranceComBeanView.addCompany.compState}"> </p:inputText>
+	           
+	           <p:outputLabel for="ClinicId" value="Clinic ID:"></p:outputLabel>
+	           <p:selectOneMenu id="ClinicId"  value="#{adminInsuranceComBeanView.addCompany.clinicCenter.cliId}" >
+	           <f:selectItem itemLabel="select one" ></f:selectItem>
+	           <f:selectItem itemLabel="burn1" itemValue="27"></f:selectItem>
+	           <f:selectItem itemLabel="burn11" itemValue="112"></f:selectItem>
+	          
+	           </p:selectOneMenu>  
+	           
+	           <p:commandButton id="mm" value="Submit" update="insuranceCompan , msg" process="@form"   action="#{adminInsuranceComBeanView.insertInsuranceCompany}" 
+	           oncomplete="PF('addData').hide();" style=" width: 40%; height: 100%; margin:1px 10px 1px 1px;"  >
+	           
+	           </p:commandButton>
+	           
+	         </p:panelGrid>
+	        </p:dialog>
+	       </h:form>
+	        
+	        <h:form id="dddd">
+	        
+	                     <p:panelGrid  columns="3"  layout="grid" style="font-size: 15px; " contentStyleClass="p-align-baseline ui-fluid">
+	                              <p:outputLabel for="compId" value="Company ID:"></p:outputLabel>
+	                               <p:inputText id="compId" required="true" placeholdedr="Insert Company ID" value="#{adminInsuranceComBeanView.insuranceCompId}" > </p:inputText>
+	                                <p:commandButton  id="SelecCompID" update="insuranceCompan"  action="#{adminInsuranceComBeanView.chosenInsuranceCompID}" process="@form,insuranceCompan"
+	                                style=" width: 40%; height: 100%; margin:1px 10px 1px 1px;" value="search" >
+	                                </p:commandButton>
+	                                 <p:commandButton  id="SelectAllComp" update="insuranceCompan" value="All Information" action="#{adminInsuranceComBeanView.chosenAllInsuranceComp}" process="@form,insuranceCompan"
+	                                 style=" width: 40%; height: 100%; margin:1px 10px 1px 1px;">
+	                                </p:commandButton>
+	                     
+	                     </p:panelGrid>
+	        
+	        </h:form>
+	        
+	     <h:form id="insuranceCompan" >
+	                 
+	                 <!-- selection="#{adminInsuranceComBean.updatesCompany}"
+	                 	                     <p:ajax  event="rowSelect" 
+	                 	                     rowKey="#{item.compCode}"
+	                 	                     
+	                 	                      ></p:ajax>
+	                 	                      selectionMode="single"
+	                 
+	                  -->
+	           <p:dataTable  id="companyData" editable="true"  scrollWidth="auto"  tableStyle="table-layout: auto;"   var="item" value="#{adminInsuranceComBeanView.selectAllCompaenies}" 
+	           style="font-size: 12px;"  scrollable="true"   scrollHeight="400">
+	                 <f:facet name="header"> Company Insurane Information </f:facet>
+	                                                    
+	                     
+	                     
+	                     <p:column  headerText="Company ID" >
+	                        <h:outputText value="#{item.compId}" ></h:outputText>
+	                     </p:column>
+	                     
+	                     <p:column  headerText="Company Code" >
+	                        <h:outputText value="#{item.compCode}"></h:outputText>
+	                     </p:column>
+	                    
+	                     <p:column headerText="Company Name">
+	                        <h:outputText value="#{item.compName}"></h:outputText>
+	                     </p:column>
+	                     
+	                     <p:column headerText="Company Phone">
+	                        <h:outputText value="#{item.compPhone}"></h:outputText>
+	                     </p:column>
+	                     
+	                     <p:column headerText="Company Adrress">
+	                        <h:outputText value="#{item.compAddress}"></h:outputText>
+	                     </p:column>
+	                     <p:column headerText="Company Status">
+	                        <h:outputText value="#{item.compState}"></h:outputText>
+	                     </p:column>
+	                     <p:column headerText="Clinc Name">
+	                        <h:outputText value="#{item.clinicCenter.cliName}"></h:outputText>
+	                     </p:column>
+	                     
+	                      <p:column headerText="Delete Company">
+                             <p:commandLink  id="DelComp"  actionListener="#{adminInsuranceComBeanView.deleteInsuranceComp(item)}" update="msg , :insuranceCompan:companyData"  process="@this">
+                                <h:outputText value="Delete"  class="ui-icon ui-icon-trash"/>
+                                <p:confirm header="Confirmation" message="are you sure ?" icon="pi pi-exclamation-triangle"></p:confirm>
+                            
+                             </p:commandLink>
+                             
+                         
+	                     </p:column>
+	                     
+	                       <p:column headerText="Edit Comoany"      >
+                             <p:commandLink  id="EditCompany"  update=":kkk" action="#{adminInsuranceComBeanView.editeCompany(item)}" oncomplete="PF('dlg1').show();">
+                                <h:outputText  value="Edit" class="ui-icon ui-icon-pencil"/>
+                                
+                             </p:commandLink>
+	                    
+	                     </p:column>
+	                     
+	                 </p:dataTable>
+	                 </h:form>
+	                 <h:form id="kkk">
+	             	        <p:dialog  header="Edit Company"   widgetVar="dlg1" width="800" >
+	             	            
+	             	            <p:panelGrid id="myy" columns="4"  layout="grid" style="font-size: 15px;">
+	             	              Company ID:<p:inputText id="companyId" value="#{adminInsuranceComBeanView.updatesCompany.compId}"></p:inputText>
+	             	              
+	                               <p:outputLabel  for="CompanyCode" value="Company Code"></p:outputLabel>
+	             	               <p:inputText id="CompanyCode" required="true" value="#{adminInsuranceComBeanView.updatesCompany.compCode}" ></p:inputText>
+	             	            
+	             	               <p:outputLabel for="CompanyName" value="Company Name:"></p:outputLabel>
+	             	               <p:inputText id="CompanyName" required="true" value="#{adminInsuranceComBeanView.updatesCompany.compName}"></p:inputText>
+	             	               
+	             	               <p:outputLabel for="CompanyPhone" value="Company Phone:"></p:outputLabel>
+	             	               <p:inputText id="CompanyPhone" required="true" value="#{adminInsuranceComBeanView.updatesCompany.compPhone}"></p:inputText>
+	
+		             	           <p:outputLabel for="CompanyAddress" value="Company Address:"></p:outputLabel>
+	             	               <p:inputText id="CompanyAddress" required="true" value="#{adminInsuranceComBeanView.updatesCompany.compAddress}"></p:inputText>
+	
+		             	           <p:outputLabel for="CompanyStatus" value="Company Status:"></p:outputLabel>
+	             	               <p:inputText id="CompanyStatus" required="true" value="#{adminInsuranceComBeanView.updatesCompany.compState}"></p:inputText>
+	             	               
+	             	               <p:outputLabel for="CompanyClinc" value="Clinic Name:"></p:outputLabel>
+	             	               <p:inputText id="CompanyClinc" required="true" value="#{adminInsuranceComBeanView.updatesCompany.clinicCenter.cliName}"></p:inputText>
+	                               
+	                               <p:commandButton value="submit" style=" width: 40%; height: 100%; margin:1px 10px 1px 1px;"
+	                               oncomplete="PF('dlg1').hide()"  actionListener="#{adminInsuranceComBeanView.updateInsuranceComp}"  update=":insuranceCompan:companyData ,msg"></p:commandButton>
+	
+	                               
+	                               
+	
+	             	            </p:panelGrid>
+	              
+	             	        </p:dialog>
+	             	        </h:form>
+	             	         <h:form>
+	                                 <p:confirmDialog showEffect="fade" hideEffect="fade"  global="true">
+                           
+                                     <p:commandButton value="yes" type="button"   styleClass="ui-confirmdialog-yes" icon="pi pi-check"></p:commandButton>
+                                     <p:commandButton value="no" type="button"  styleClass="ui-confirmdialog-no" icon="pi pi-times"></p:commandButton>
+                            
+                             </p:confirmDialog> 
+	        
+	                </h:form>
+	   
+	</ui:define>
+	
+</ui:composition>
+</h:body>
+</html>

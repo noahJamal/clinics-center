@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<head>
+	<style>    
+
+</style>
+</head>
+<h:body>
+<ui:composition template="./ClinicTemplateAdmin.xhtml">
+	<ui:define name="doctor_Contant">
+	   <h:form id="SearchForm">
+	         <p:panelGrid id="searchPanelGrid" columns="3" layout="grid" columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+	                       contentStyleClass="p-align-baseline ui-fluid"  >
+	              
+	                    <p:outputLabel for="serchDocID" value="Doctor ID: "></p:outputLabel>
+	                    <p:inputText id="serchDocID" value="#{adminDoctorView.doctorId}" required="true" requiredMessage="Please insert doctor ID!" placeholder="insert doctor Id" ></p:inputText>
+	                    <p:commandButton id="searchDocIDButton" value="Search " actionListener="#{adminDoctorView.chosenDoctorID}" update=":doctorform:doctorDataView , SearchMessage" process="@this serchDocID" style=" width: 50%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-search"> </p:commandButton>
+	         
+	         
+	                    <p:outputLabel for="serchDocName" value="Doctor "></p:outputLabel>
+	                    <p:autoComplete id="serchDocName" value="#{adminDoctorView.doctorsName}" completeMethod="#{adminDoctorView.chosenDoctorNamebyAutocompleate}" required="true" requiredMessage="Please insert doctor Name !" placeholder="insert doctor name" ></p:autoComplete>
+	                    <p:commandButton id="searchDocNameButton" value="Search"  actionListener="#{adminDoctorView.chosenDoctorName}" process="@this  serchDocName" update=":doctorform:doctorDataView , SearchMessage" style=" width: 50%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-search"> </p:commandButton>
+	          
+	                    <p:commandButton id="searchAllButton" value="Find All" actionListener="#{adminDoctorView.chosenAllDoctor}" process="@this searchAllButton" update=":doctorform:doctorDataView , SearchMessage" style=" width: 50%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-search"></p:commandButton>
+	         
+	         
+	         </p:panelGrid>
+	     
+	      	      <p:growl id="SearchMessage" showSummary="true" showDetail="true"></p:growl>
+	      
+	     
+	     </h:form>
+	    
+	     
+	         <h:form id="addNewDocForm">
+	                 <p:dialog id="addNewDocDlg" widgetVar="addDocDlg" width="900" header="ADD Doctor:">
+	                 
+	                        <p:panelGrid columns="4" layout="grid" id="addDocPanel" columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+	                                     contentStyleClass="p-align-baseline ui-fluid" >
+	                                     
+	                                     
+	                                   <p:outputLabel for="addDocCode" value="Doctor Code:"></p:outputLabel>
+	                                   <p:inputText id="addDocCode" value="#{adminDoctorView.addNewDoctor.docCode}" required="true" requiredMessage="Please insert your Code !" placeholder="Insert your Code" ></p:inputText>
+	         	                      
+	         	                       <p:outputLabel for="addDocName" value="Doctor Name:"></p:outputLabel>
+	                                   <p:inputText id="addDocName" value="#{adminDoctorView.addNewDoctor.dcoName}" required="true" requiredMessage="Please insert your name !" placeholder="Insert your Name "  >
+	                                              <f:validateLength minimum="3" maximum="15"></f:validateLength>
+	                                   </p:inputText>
+
+	         	                       <p:outputLabel for="addDocphone" value="Doctor phone :"></p:outputLabel>
+	                                   <p:inputMask id="addDocphone" value="#{adminDoctorView.addNewDoctor.docPhone}" required="true" requiredMessage="Please insert your  phone!" placeholder="Insert your phone "  mask="(999) 999-9999"></p:inputMask>
+	         	                      	         	          
+	                                   <p:outputLabel for="addDocExp" value="Doctor Experience::"></p:outputLabel>
+	                                   <p:inputText id="addDocExp" value="#{adminDoctorView.addNewDoctor.docExp}" required="true" requiredMessage="Please insert your Experience !" placeholder="Insert your Experience" > </p:inputText>
+	         
+	                                   <p:outputLabel for="addDocMajor" value="Doctor Major:"></p:outputLabel>
+	                                   <p:selectOneMenu id="addDocMajor" value="#{adminDoctorView.addNewDoctor.docMajor}" required="true" requiredMessage="Please selecet Doctor Major  !"  
+	                                                      panelStyle="width:180px"  effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+	                                      <f:selectItem itemLabel="Select One" itemValue="" ></f:selectItem>
+	                                      <f:selectItems value="#{systemLookupView.selectDetails.entrySet()}" var="entry" itemLabel="#{entry.key}" itemValue="#{entry.value}"></f:selectItems>
+	                                   </p:selectOneMenu>
+	                                                                                                            
+	                                    <p:outputLabel for="addDocBithDay" value="Birth Day:"></p:outputLabel>
+                                        <p:calendar id="addDocBithDay" value="#{adminDoctorView.addNewDoctor.docBd}" required="true" requiredMessage="pLease insert BirthDate!" pattern="dd/MM/yy" monthNavigator="true" yearNavigator="true" yearRange="c-60:c-18" display="inline" navigator="true" showOn="button">
+                                            <f:converter converterId="doctorDateConv" ></f:converter>
+	     	                                <f:validator validatorId="DateDocValidator"></f:validator>
+                                        </p:calendar>
+                                        
+                                        <p:outputLabel for="addDocAddr" value="Doctor Address:"></p:outputLabel>
+                                        <p:inputText id="addDocAddr" value="#{adminDoctorView.addNewDoctor.docAddress}" required="true" placeholder="99 street apt,city,country" requiredMessage="Please Insert your Address !"></p:inputText>
+	         	                       
+	         	                        <p:outputLabel for="addCliName:" value="Clinic Name:"></p:outputLabel>
+	         	                        <p:inputText id="addCliName" value="#{adminDoctorView.addNewDoctor.clinicCenter.cliId}" required="true" requiredMessage="Please insert Clinic !" placeholder="clinic name" ></p:inputText>
+	         	                        
+	         	                        <p:outputLabel for="addUserName" value="User ID :"></p:outputLabel>
+	         	                        <p:inputText id="addUserName" value="#{adminDoctorView.addNewDoctor.user.userId}" required="true" requiredMessage="Please insert User !" placeholder="User" ></p:inputText>
+	         	                        
+	         	                        <p:commandButton id="addNewDocButton" value="Submit" actionListener="#{adminDoctorView.insertDoctor}" process="@form" update=":doctorform:doctorDataView , addDocGrowl"  onclick="PF('addDocDlg').hide();" style=" width: 50%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-check"></p:commandButton>
+	                        </p:panelGrid>
+	           
+	                        </p:dialog>
+	        
+	        
+	        </h:form>
+	     	           	                 	           <p:growl id="addDocGrowl" showDetail="true" showSummary="true"></p:growl>
+	     
+	         <h:form id="doctorform">
+	         
+	                   <p:commandButton id="addDocButton" value="Add Doctor" icon="ui-icon-plusthick" oncomplete="PF('addDocDlg').show();" ></p:commandButton>
+	             
+	             <p:dataView id="doctorDataView" rows="3" paginator="true" value="#{adminDoctorView.allDocInfo}" var="item"  gridIcon="pi pi-th-large" listIcon="pi pi-bars" 
+	                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+	                          layout="grid" gridRowStyleClass="p-lg-6 p-xl-4" style="font-size: 12px;" >
+	             
+	                   <p:dataViewGridItem  id="doctorDVGI" >
+	                      
+                                        <p:growl id="docDelGrowl" showDetail="true" showSummary="true"></p:growl>
+
+	                                     <p:panel  style="margin: 0px 10px 0px 0px; width:60% ; padding:0px,0px,0px,0px;  ">
+	                                     
+       
+	                                   <div style="width:20%;">
+	                                           <p:menuButton id="UserOpertion" icon="ui-icon-gear"  >
+	                                             
+	                                             <p:menuitem  action="#{adminDoctorView.deleteDocotr}" update=":doctorform , docDelGrowl" process="@this" >
+	                                                     <h:outputText value="Delete"  class="ui-icon ui-icon-trash"></h:outputText>	                                  
+                                                         <f:setPropertyActionListener value="#{item}" target="#{adminDoctorView.deletesDoctor}"></f:setPropertyActionListener>
+	                                                   <p:confirm header="Confirmation" message="are you sure ?" icon="pi pi-exclamation-triangle"></p:confirm>
+	                                             </p:menuitem>
+	                                             
+	                                             <p:menuitem  value="Edit" action="#{adminDoctorView.editDocInfo(item)}" oncomplete="PF('dlgEditDoc').show();" update=":docUpdateForm ">
+	                                                <h:outputText  value="Edit" class="ui-icon ui-icon-pencil"/>
+	                                             </p:menuitem>
+	                                           
+	                                           </p:menuButton>
+	                                     </div>
+	                                     <p:panelGrid  columns="2" style="border :hidden; width:100%; " >
+	                                   	        
+	                                   	        <span style=" " class="product-category">Doctor ID: #{item.docId}</span>
+	                                   	       
+	                                   	        <p:graphicImage url="../picture/docPicture.jpg" style="text-align: center;"></p:graphicImage>
+	                                   
+	                                   
+	                                   
+	                                   
+	                                   
+	                                   
+	                                   
+	                                     </p:panelGrid>
+	                                           <p:panelGrid columns="2" style="width: 100%;" >
+	                                           
+	                                               <h:outputText for="docNameGrid" value="Name"></h:outputText>
+	                                               <h:outputText id="docNameGrid" value="#{item.dcoName}"></h:outputText>
+	                                           
+	                                           	   <h:outputText for="docMajorGrid" value="Major"></h:outputText>
+	                                               <h:outputText id="docMajorGrid" value="#{item.docMajor}"></h:outputText>
+	                                               	                                           
+	                                           	   <h:outputText for="docPhoneGrid" value="Phone"></h:outputText>
+	                                               <h:outputText id="docPhoneGrid" value="#{item.docPhone}"></h:outputText>
+	                                               	                                           
+	                                           	   <h:outputText for="docExpGrid" value="Experience"></h:outputText>
+	                                               <h:outputText id="docExpGrid" value="#{item.docExp}"></h:outputText>
+	                                               	                                           
+	                                           	   <h:outputText for="docBirthGrid" value="Birth Day"></h:outputText>
+	                                               <h:outputText id="docBirthGrid" value="#{item.docBd}">
+	                                                           <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+	                                                </h:outputText>
+	                                               	                                           
+	                                           	   <h:outputText for="docClinicGrid" value="Clinic Name"></h:outputText>
+	                                               <h:outputText id="docClinicGrid" value="#{item.clinicCenter.cliName}"></h:outputText>
+	                                               
+	                                               	                                           
+	                                           	   <h:outputText for="docAddrGrid" value="Address"></h:outputText>
+	                                               <h:outputText id="docAddrGrid" value="#{item.docAddress}"></h:outputText>
+	                                               
+	                                           </p:panelGrid> 
+	                                     </p:panel>
+	                                     
+	                              
+	                           
+	                          
+	                       
+	                      
+	             
+	                   </p:dataViewGridItem>
+	             
+	             
+	             </p:dataView>
+	         </h:form>
+	         
+	         
+	     	   <h:form id="docUpdateForm">
+	     	   
+	     	        <p:growl id="docUpdateGrowl" showDetail="true" showSummary="true"></p:growl>
+	     	        
+	     	      <p:dialog  id="mmmmm" widgetVar="dlgEditDoc" header=" User Eidt" width="900" >
+	     	            <p:panelGrid  layout="grid" columns="4" columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+	                                   contentStyleClass="p-align-baseline ui-fluid" >
+	     	                           
+	     	                    <f:facet name="header">
+	     	                           <h:outputFormat value="Doctor ID: {0}"> 
+	     	                             <f:param value="#{adminDoctorView.updatesDoctors.docId}"></f:param>
+	     	                           </h:outputFormat>
+	     	                           
+	     	                    </f:facet>
+	     	                    <p:outputLabel for="DocNameInput" value="Doctor Name:" ></p:outputLabel>
+	     	                    <p:inputText id="DocNameInput" value="#{adminDoctorView.updatesDoctors.dcoName}" required="true" requiredMessage="Please Insert Doctor Name!" ></p:inputText>
+	     	                    
+	     	                           
+	     	                    <p:outputLabel for="DocMajorInput" value="Doctor Major:" ></p:outputLabel>
+	     	                    <p:inputText id="DocMajorInput" value="#{adminDoctorView.updatesDoctors.docMajor}" required="true" requiredMessage="Please Insert Doctor Major!" ></p:inputText>
+	     	                    
+	     	                           
+	     	                    <p:outputLabel for="DocPhoneInput" value="Doctor Phone:" ></p:outputLabel>
+	     	                    <p:inputMask id="DocPhoneInput" value="#{adminDoctorView.updatesDoctors.docPhone}" required="true" requiredMessage="Please Insert Doctor Phone!"  mask="(999) 999-9999"  ></p:inputMask>
+	     	                    
+	     	                           
+	     	                    <p:outputLabel for="DocExpInput" value="Doctor Exp:" ></p:outputLabel>
+	     	                    <p:inputText id="DocExpInput" value="#{adminDoctorView.updatesDoctors.docExp}" required="true" requiredMessage="Please Insert Doctor Exp!" >
+	     	                    </p:inputText>
+	     	                           
+	     	                    
+	     	                           
+	     	                    <p:outputLabel for="DocAddInput" value="Doctor Address" ></p:outputLabel>
+	     	                    <p:inputText id="DocAddInput" value="#{adminDoctorView.updatesDoctors.docAddress}" required="true" requiredMessage="Please Insert Doctor Address!" ></p:inputText>
+	     	                    
+	     	                    <p:outputLabel for="BocBirthInput" value="Birth Date:"></p:outputLabel>
+	     	                    <p:calendar  id="BocBirthInput" value="#{adminDoctorView.updatesDoctors.docBd}" pattern="dd/MM/yy" monthNavigator="true" yearNavigator="true" yearRange="c-60:c-18" display="inline" navigator="true" showOn="button" >
+	     	                            <f:converter converterId="doctorDateConv" ></f:converter>
+	     	                            <f:validator validatorId="DateDocValidator"></f:validator>
+	     	                    </p:calendar>
+	     	                  
+	     	                    <p:outputLabel for="DocClinicInput" value="Clinic Name" ></p:outputLabel>
+	     	                    <p:inputText id="DocClinicInput" value="#{adminDoctorView.updatesDoctors.clinicCenter.cliName}" required="true" requiredMessage="Please Insert Clinic Name!" ></p:inputText>  
+	     	                    
+	     	                    
+	     	                    <f:facet name="footer" >
+	     	                        <p:commandButton value="Submit" actionListener="#{adminDoctorView.updateDocotr}" oncomplete="PF('dlgEditDoc').hide();" process="@form mmmmm" update=":doctorform:doctorDataView ,docUpdateGrowl"
+	     	                                         style=" width: 25%; height: 100%; margin:1px 10px 1px 1px;" icon="ui-icon-check">
+	     	                        </p:commandButton>
+	     	                    </f:facet>
+	     	            
+	     	            
+	     	            </p:panelGrid>
+	     	      
+	     	      </p:dialog>
+	     	   </h:form>         
+	     
+	            <h:form>
+	            
+	                            <p:confirmDialog showEffect="fade" hideEffect="fade"  global="true">
+                           
+                                     <p:commandButton value="yes" type="button"   styleClass="ui-confirmdialog-yes" icon="pi pi-check"></p:commandButton>
+                                     <p:commandButton value="no" type="button"  styleClass="ui-confirmdialog-no" icon="pi pi-times"></p:commandButton>
+	            </p:confirmDialog>
+	            </h:form>
+	     
+	         
+	 
+	</ui:define>
+</ui:composition>
+	</h:body>
+
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+<h:form>
+<h:inputText value="#{addClinicBean.clinicCenter.cliCode}"></h:inputText>
+<h:inputText value="#{addClinicBean.clinicCenter.cliName}"></h:inputText>
+<h:inputText value="#{addClinicBean.clinicCenter.cliLoc}"></h:inputText>
+<h:inputText value="#{addClinicBean.clinicCenter.cliNote}"></h:inputText>
+
+<h:commandButton value="Insert Clinic" action="#{addClinicBean.addClinic}"></h:commandButton>
+</h:form>
+</h:body>
+</html>

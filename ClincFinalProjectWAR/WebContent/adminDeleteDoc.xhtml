@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head></h:head>
+<h:body> <h:form>
+<h:inputText value="#{adminOperationDoctorBean.deletesDoctor.docCode}" disabled="true"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.deletesDoctor.dcoName}"  disabled="true"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.deletesDoctor.docBd}"  disabled="true"></h:inputText>
+
+<h:inputText value="#{adminOperationDoctorBean.deletesDoctor.docAddress}"  disabled="true"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.deletesDoctor.docMajor}"  disabled="true"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.deletesDoctor.docExp}" disabled="true"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.deletesDoctor.docPhone}" disabled="true"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.deletesDoctor.clinicCenter.cliId}" disabled="true"></h:inputText>
+<h:inputText value="#{adminOperationDoctorBean.deletesDoctor.user.userId}" disabled="true"></h:inputText>
+<h:commandButton value="delete Doctor" action="#{adminOperationDoctorBean.deleteDocotr}" ></h:commandButton>
+</h:form> </h:body>
+
+</html>

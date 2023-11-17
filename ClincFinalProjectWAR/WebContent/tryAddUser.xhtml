@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+<h:form>
+
+<h:inputText value="#{userAdminBusBean.addUserNew.userCode}" ></h:inputText>
+<h:inputText value="#{userAdminBusBean.addUserNew.userName}"></h:inputText>
+<h:inputText value="#{userAdminBusBean.addUserNew.userPassword}"></h:inputText>
+<h:inputText value="#{userAdminBusBean.addUserNew.userEmail}"></h:inputText>
+<h:inputText value="#{userAdminBusBean.addUserNew.userType}"></h:inputText>
+<h:inputText value="#{userAdminBusBean.addUserNew.clinicCenter}"></h:inputText>
+<h:commandButton value="insert new user" action="#{userAdminBusBean.userInsert}"></h:commandButton>
+
+
+
+</h:form>
+
+</h:body>
+</html>

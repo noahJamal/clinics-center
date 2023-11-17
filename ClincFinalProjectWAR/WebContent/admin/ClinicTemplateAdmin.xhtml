@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+  <style>
+        .ui-layout-unit .ui-layout-unit-content {
+            border:hidden;
+            overflow: hidden !important;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+
+<p:layout fullPage="true"  >
+
+    <f:view>
+ <div>
+    <p:layoutUnit  position="center"    >
+         <ui:insert  name="Company_insurance"></ui:insert>
+         <ui:insert  name="clinic_Contant"></ui:insert>
+         <ui:insert  name="dose_Contant"></ui:insert>
+         <ui:insert  name="user_Contant"></ui:insert>
+       
+         <ui:insert  name="doctor_Contant"></ui:insert>
+         <ui:insert name="medicine_Contant"></ui:insert>
+         <ui:insert name="diagnosis_Contant"></ui:insert>
+   
+    </p:layoutUnit>
+    </div>
+    </f:view>
+    <div>
+    
+    <p:layoutUnit position="north"  >
+    
+   <ui:include src="topClinicTemplate.xhtml"></ui:include>
+    </p:layoutUnit>
+    </div>
+    
+    <div>
+     <p:layoutUnit position="west"   >
+    
+   <ui:include src="leftSidebarContant.xhtml"></ui:include>
+    </p:layoutUnit>
+    
+    </div>
+</p:layout>
+
+
+
+
+
+
+
+</h:body>
+
+</html>

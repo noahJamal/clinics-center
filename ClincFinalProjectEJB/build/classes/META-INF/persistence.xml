@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="ClincFinalProjectEJB" transaction-type="JTA">
+		<jta-data-source>jdbc/clinicProject</jta-data-source>
+		<class>model.entity.Appointment</class>
+		<class>model.entity.CardInsurance</class>
+		<class>model.entity.ClinicCenter</class>
+		<class>model.entity.Diagnosi</class>
+		<class>model.entity.DiagnList</class>
+		<class>model.entity.DiscretionSer</class>
+		<class>model.entity.Doctor</class>
+		<class>model.entity.Dose</class>
+		<class>model.entity.InsuranceCompany</class>
+		<class>model.entity.MedicalCheck</class>
+		<class>model.entity.Medicine</class>
+		<class>model.entity.Patient</class>
+		<class>model.entity.PatientVisit</class>
+		<class>model.entity.PatSerivce</class>
+		<class>model.entity.Prescription</class>
+		<class>model.entity.RequestMedChk</class>
+		<class>model.entity.Sequence</class>
+		<class>model.entity.User</class>
+		<class>model.entity.SystemLookup</class>
+		<properties>
+			<property name="javax.persistence.schema-generation.database.action" value="create"/>
+		</properties>
+	</persistence-unit>
+</persistence>
